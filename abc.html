@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ABCDEFG</title>
+</head>
+   <script type="text/javascript" src="./js/url.js"></script>
+<body>
+
+<a href="/excel" type="button">下载excel</a><br>
+
+ <input type="button" onclick="cli()"  value="SELECT">
+
+
+<form>
+    <input type="file" id="file">
+    <input type="button" onclick="a()" value="WXID">
+    <input type="button" onclick="b()"  value="BJH">
+    <input type="button" onclick="c()"  value="BJH-2-">
+
+    <input name="1234" type="radio" value="1231" checked="checked" >abc
+    <input name="1234" type="radio" value="111" >xzf
+</form>
+</div>
+
+<script type="text/javascript">
+
+
+
+	function cli(){
+		
+	}
+	
+
+	
+		
+	
+    function a() {
+
+        var files = document.getElementById("file").files;
+        var len = files[0].name;
+        if (len.substr(len.length - 4, len.length) != ".json") {
+            if (len.substr(len.length - 5, len.length) != ".json") {
+                alert("格式错误");
+                return false;
+            }
+        }
+
+
+        //新建一个FormData对象
+        var formData = new FormData();
+        //追加文件数据
+        for (var i = 0; i < files.length; i++) {
+            formData.append("file", files[i]);
+        }
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', 'cart/cdupload', true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            }
+        }
+
+    }
+
+
+    function b() {
+
+        var files = document.getElementById("file").files;
+        var len = files[0].name;
+        if (len.substr(len.length - 4, len.length) != ".json") {
+            if (len.substr(len.length - 5, len.length) != ".json") {
+                alert("格式错误");
+                return false;
+            }
+        }
+        //新建一个FormData对象
+        var formData = new FormData();
+        //追加文件数据
+        for (var i = 0; i < files.length; i++) {
+            formData.append("file", files[i]);
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', 'cart/bjhJson', true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            }
+        }
+    }
+
+    function c() {
+
+        var files = document.getElementById("file").files;
+
+        var len = files[0].name;
+        if (len.substr(len.length - 4, len.length) != ".json") {
+            if (len.substr(len.length - 5, len.length) != ".json") {
+                alert("格式错误");
+                return false;
+            }
+        }
+        //新建一个FormData对象
+        var formData = new FormData();
+        //追加文件数据
+        for (var i = 0; i < files.length; i++) {
+            formData.append("file", files[i]);
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', 'cart/bjhJsonSer', true);
+        xhr.send(formData);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            }
+        }
+    }
+
+</script>
+
+
+</body>
+</html>

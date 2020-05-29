@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>添加账户</title>
+    <script type="text/javascript" src="./js/url.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="./XiaLaDuoXuan/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="./XiaLaDuoXuan/css/public.css" media="all"/>
+
+    <style>
+        .layui-layer-title {
+            padding: 0 80px 0 20px;
+            height: 42px;
+            line-height: 42px;
+            /* border-bottom: 1px solid #eee;*/
+            font-size: 14px;
+            color: #333;
+            overflow: hidden;
+            background-color: #00F7DE;
+            border-radius: 2px 2px 0 0;
+        }
+
+        .layui-form-select dl {
+            max-height: 150px;
+        }
+
+        .layui-layer-btn .layui-layer-btn0 {
+            background-color: #0ebf34;
+            color: #fff;
+            width: 300px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .new_div {
+            width: 500px;
+            height: 20px;
+            position: absolute;
+            left: 50px;
+            top: 170px;
+            border: none;
+        }
+
+        .ul_sty {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            padding-left: 0px;
+            margin-top: 0px;
+            border: 1px solid #e0dddd;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .li_sty {
+            font-size: 14px;
+            position: absolute;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: red;
+            margin-left: 5px;
+        }
+
+        .layui-form-select .layui-this {
+            color: #1e3cff
+        }
+    </style>
+</head>
+
+<body class="childrenBody">
+<script type="text/javascript" src="./XiaLaDuoXuan/layui/layui.js"></script>
+<script type="text/javascript" src="./XiaLaDuoXuan/selectMultiple.js"></script>
+<script src="build/js/jquery-3.1.0.min.js"></script>
+<script src="./plugins/jquery.min.js"></script>
+
+<fieldset class="layui-elem-field layui-field-title"
+          style="margin-top: 20px;">
+    <legend>添加账户</legend>
+</fieldset>
+
+<form id="from1" class="layui-form layui-row"  action="##">
+    <div class="layui-form-item">
+        <label class="layui-form-label">账户名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="username" lay-verify="title"
+                   autocomplete="off" placeholder="账户名必填,大于5位" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">填写密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" autocomplete="off"
+                   placeholder="密码必填,大于5位" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">再填写密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password1" autocomplete="off"
+                   placeholder="再填写密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block">
+            <select id="per" lay-filter="aaa" multiple name="role" lay-verify="required">
+            </select>
+        </div>
+    </div>
+    <label class="layui-form-label"></label>
+    <div class="layui-form-item">
+
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" style="width:91%;" onclick="upload()">立即提交</button>
+        </div>
+    </div>
+</form>
+
+</body>
+
+<script type="text/javascript">
+
+    layui.use(['layer', 'jquery', 'form'], function () {
+        var layer = layui.layer,
+            $ = layui.jquery,
+            form = layui.form;
+        var urle = hostUrl + "role/roleList";
+        console.log("asdasd");
+        var datae = null;//参数  1： 在职的  0：离职
+        $.ajaxSettings.async = false;
+        $.post(urle, datae, function (result) {
+
+            var optionstring = "";
+            for (var i = 0; i < result.data.length; i++) {
+                optionstring += "<option value=\"" + result.data[i].id + "\">" + result.data[i].name + "</option>";
+                $("#per").html(optionstring);
+            }
+            console.log(optionstring);
+        }, "json");
+        $.ajaxSettings.async = true;
+        form.render();
+    })
+
+    function upload() {
+
+        var id = location.search;
+        var ssId = "";
+        if (null != id) {
+            arr = id.split("=");
+            if (arr.length > 0) {
+                ssId = arr[1];
+            }
+        }
+        ;
+
+        var u = $("input[name=username]").val();
+        var p = $("input[name=password]").val();
+        var p1 = $("input[name=password1]").val();
+        if (u == '' || p == '' || p1 == '') {
+            layer.alert("账户号和密码不能为空");
+            return false;
+        } else {
+            if (u.length < 5 || p.length < 5 || p1.length < 5) {
+                layer.alert("账户号和密码长度必须大于5位");
+                return false;
+            }
+            if (p != p1) {
+                layer.alert("两次密码不一致");
+                return false;
+            }
+        }
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("organId:'1333333333'");
+            },
+            headers:{'Content-Type':'application/json;charset=utf8','organId':'1333333333'},
+            url: hostUrl + '/account/save',//url
+            data: $('#from1').serialize(),
+            success: function (result) {
+                console.log(result.code);//打印服务端返回的数据(调试用)
+                if (result.code == 0) {
+                    alert(result.msg);
+                    location.href = 'account.html';
+                } else {
+                    alert(result.msg);
+                }
+                ;
+            },
+            error: function () {
+                alert("异常");
+            }
+        });
+    }
+</script>
+<script>
+
+    $("button[name='selectAppList']").click(function () {
+        location.href = 'account.html';
+    });
+
+</script>
+
+
+</html>

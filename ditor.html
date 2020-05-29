@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+      <script type="text/javascript" src="./js/url.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HandyEditor</title>
+    <style type="text/css">
+    small{font-size: 14px;color: #aaa;}
+    pre{padding: 5px;background-color: #eee;}
+    .textcenter{text-align: center;}
+    </style>
+  </head>
+  <body>
+    <h1>HandyEditor <small>一款十分轻便且使用方便的所见即所得富文本web编辑器，由Catfish(鲶鱼) CMS官方开发</small></h1>
+
+    <textarea id="editor" name="editor" rows="5" style="display: none;"></textarea>
+    <br>
+    <button onclick="getHtml()">获取HTML</button>&nbsp;&nbsp;
+    <button onclick="getText()">获取纯文本</button>
+    <br><br>
+    <h4>使用方法：</h4>
+    <h5>1、引入HandyEditor的javaScript文件</h5>
+    <pre>&lt;script src="HandyEditor.min.js"&gt;&lt;/script&gt;</pre>
+    <h5>2、在您的javaScript代码中添加HandyEditor代码</h5>
+    <pre>var he = HE.getEditor('editor');//其中的editor是文本输入框的id</pre>
+    <h5>3、获取编辑器中的内容</h5>
+    <pre>he.getHtml();//获取HTML代码</pre>
+    <pre>he.getText();//获取纯文本</pre>
+    <br>
+
+
+    <br>
+
+    <script src="./HandyEditor/HandyEditor.min.js"></script>
+    <script type="text/javascript">
+      // var he = HE.getEditor('editor');
+      var he = HE.getEditor('editor',{
+          width : '80%',
+          height : '500px',
+          autoHeight : true,
+          autoFloat : false,
+          topOffset : 0,
+          uploadPhoto : true,
+          uploadPhotoHandler : hostUrl+'upload',
+          uploadPhotoSize : 2000,
+          uploadPhotoType : 'gif,png,jpg,jpeg',
+          uploadPhotoSizeError : '不能上传大于2MB的图片',
+          uploadPhotoTypeError : '只能上传gif,png,jpg,jpeg格式的图片',
+          lang : 'zh-jian',
+          skin : 'HandyEditor',
+          externalSkin : '',
+          item : ['bold','italic','strike','underline','fontSize','fontName','paragraph','color','backColor','|','center','left','right','full','indent','outdent','|','link','unlink','textBlock','code','selectAll','removeFormat','trash','|','image','expression','subscript','superscript','horizontal','orderedList','unorderedList','|','undo','redo','|','html','|','about']
+      });
+
+      function getHtml(){
+        alert(he.getHtml());
+      }
+      function getText(){
+        alert(he.getText());
+      }
+    </script>
+  </body>
+</html>
